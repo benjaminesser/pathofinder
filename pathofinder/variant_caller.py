@@ -48,8 +48,10 @@ def call_variants(mpileup_file):
     with open(mpileup_file, 'r') as f:
         for line in f:
             chromosome, position, reference_base, num_reads, read_bases, base_qualities = parse_mpileup_line(line)
+            ref_reads = 0
+            a_reads = 0
+            t_reads = 0
+            g_reads = 0
+            c_reads = 0
 
-            if():  # if we decide that this position is a variant, add it to variants list
-
-            else:
-                continue
+            f

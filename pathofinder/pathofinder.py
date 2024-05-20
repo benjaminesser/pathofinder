@@ -25,6 +25,6 @@ def main():
     args = parser.parse_args()
 
     variants = call_variants(args.mpileup)
+    print(variants)
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__
