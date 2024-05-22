@@ -18,6 +18,11 @@ git clone https://github.com/benjaminesser/PathoFinder.git
 cd PathoFinder
 pip install .
 ```
+You will also need to instal vcfpy. You can install it directly using:
+
+```
+pip install vcfpy
+```
 ## Usage
 
 To use PathoFinder, you need to prepare your genomic data in the mpileup format. Once you have your data ready, you can run PathoFinder as follows:
