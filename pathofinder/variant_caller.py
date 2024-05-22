@@ -79,7 +79,7 @@ def call_variants(mpileup_file, min_var_freq):
                     'FILTER': '.',
                     'INFO': '.',
                     'FORMAT': '.',
-                    'SAMPLE': ',' 
+                    'SAMPLE': '.' 
                 }
 
                 variants.append(variant)
