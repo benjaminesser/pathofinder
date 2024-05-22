@@ -21,10 +21,16 @@ def main():
     # Output
     parser.add_argument("-o", "--out", help="Write output to file. " \
                         "Default: stdout", metavar="FILE", type=str, required=False)
+
+    # Optional arguments
+    parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant", type=float, required=False, default=0.2)
     
     args = parser.parse_args()
 
-    variants = call_variants(args.mpileup)
-    print(variants)
+    variants = call_variants(args.mpileup, args.min_var_freq)
+    
+    for variant in variants:
+        print(variant)
 
-if __name__ == "__
+if __name__ == "__main__":
+    main()
