@@ -44,6 +44,8 @@ def call_variants(mpileup_file):
         and number of reads.
     """
 
+
+
     variants = []
     with open(mpileup_file, 'r') as f:
         for line in f:
@@ -55,3 +57,4 @@ def call_variants(mpileup_file):
             c_reads = 0
 
             f
+

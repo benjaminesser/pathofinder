@@ -1,4 +1,6 @@
-def build_vcf(variants, output_file):
+def build_vcf(variants, output_file, additional_headers=None):
+    if additional_headers is None:
+        additional_headers = []
     """
     Builds a VCF file from a list of variants.
 
@@ -24,7 +26,7 @@ def build_vcf(variants, output_file):
         '##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">',
         '##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">',
         "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tSAMPLE"
-    ]
+    ] + additional_headers
 
     # Write the header and variants to the VCF file
     with open(output_file, 'w') as vcf_file:
@@ -52,4 +54,12 @@ def build_vcf(variants, output_file):
             # Write the variant line
             vcf_file.write(variant_line + '\n')
 
-    
+#error handling
+def safe_get(dictionary, key, default=''):
+    """Return the value from dictionary safely or a default if the key is missing."""
+    return dictionary.get(key, default)
+   
+#validating variant data
+# if not all(key in variant for key in ['CHROM', 'POS', 'REF', 'ALT']):  # Add other necessary keys
+ #               print(f"Skipping invalid variant data: {variant}")
+ #               continue
