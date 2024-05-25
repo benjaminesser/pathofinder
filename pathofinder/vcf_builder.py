@@ -1,7 +1,7 @@
 import vcfpy
 import os
 
-def create_vcf_from_variants(variants, output_path):
+def build_vcf(variants, output_path):
 
     """
     Create a VCF file from a list of variant dictionaries.
@@ -76,7 +76,7 @@ test_variants = [
 ]
 
 output_vcf_path = 'test_output.vcf'
-create_vcf_from_variants(test_variants, output_vcf_path)
+build_vcf(test_variants, output_vcf_path)
 
 def print_vcf_contents(file_path):
     with open(file_path, 'r') as file:

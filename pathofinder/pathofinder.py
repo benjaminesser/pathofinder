@@ -8,6 +8,7 @@ Similar to VarScan pileup2snp
 
 import argparse
 from variant_caller import call_variants
+from vcf_builder import build_vcf
 
 def main():
     parser = argparse.ArgumentParser(
@@ -31,6 +32,8 @@ def main():
     
     for variant in variants:
         print(variant)
+
+    build_vcf(variants, args.out)
 
 if __name__ == "__main__":
     main()
