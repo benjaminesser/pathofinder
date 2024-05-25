@@ -1,65 +1,86 @@
-def build_vcf(variants, output_file, additional_headers=None):
-    if additional_headers is None:
-        additional_headers = []
-    """
-    Builds a VCF file from a list of variants.
+import vcfpy
+import os
 
+def build_vcf(variants, output_path):
+
+    """
+    Create a VCF file from a list of variant dictionaries.
+    
     Parameters:
-    - variants: List of dictionaries, each representing a variant. Each dictionary should have the following keys:
-        - 'CHROM': Chromosome
-        - 'POS': Position
-        - 'ID': Identifier
-        - 'REF': Reference base
-        - 'ALT': Alternate base
-        - 'QUAL': Quality score
-        - 'FILTER': Filter status
-        - 'INFO': Additional information
-        - 'FORMAT': Format of the genotype data
-        - 'SAMPLE': List of sample data corresponding to the FORMAT
-
-    - output_file: Path to the output VCF file.
+    - variants: List of dictionaries, each representing a variant with keys
+                'CHROM', 'POS', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', and 'FORMAT'.
+    - output_path: Path to the output VCF file.
     """
-    # VCF header lines
-    vcf_header = [
-        "##fileformat=VCFv4.1",
-        "##source=PathoFinder",
-        '##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">',
-        '##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">',
-        "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tSAMPLE"
-    ] + additional_headers
+    
+    output_dir = os.path.dirname(output_path)
+    if not os.path.exists(output_dir) and output_dir != '':
+        os.makedirs(output_dir)
 
-    # Write the header and variants to the VCF file
-    with open(output_file, 'w') as vcf_file:
-        # Write the header lines
-        for line in vcf_header:
-            vcf_file.write(line + '\n')
+    
+    header = vcfpy.Header(
+        lines=[
+            vcfpy.HeaderLine(key="fileformat", value="VCFv4.2"),
+            vcfpy.HeaderLine(key="source", value="PathoFinder"),
+            
+        ],
+        samples=vcfpy.SamplesInfos(["Sample1"])  
+    )
+
+    gt_format_mapping = {
+        "ID": "GT",
+        "Number": "1",
+        "Type": "String",
+        "Description": "Genotype"
+    }
+    gt_format_line = vcfpy.FormatHeaderLine.from_mapping(gt_format_mapping)
+    header.add_line(gt_format_line)
+
+    writer = vcfpy.Writer.from_path(output_path, header)
+
+    # Iterate over the variant dictionaries to create VCF records
+    for variant in variants:
+        record = vcfpy.Record(
+            CHROM=variant['CHROM'],
+            POS=int(variant['POS']),  # Ensure POS is an integer
+            ID=variant.get('ID', '.'),
+            REF=variant['REF'],
+            ALT=[vcfpy.Substitution(type_="SNV", value=variant['ALT'])],  # Create a substitution object
+            QUAL=variant.get('QUAL', '.'),
+            FILTER=variant.get('FILTER', '.'),
+            INFO=variant.get('INFO', {}),
+            FORMAT=variant['FORMAT'].split(':'),
+            calls=[vcfpy.Call(sample='Sample1', data={"GT": variant['SAMPLE']})]
+        )
         
-        # Write each variant
-        for variant in variants:
-            
-            # Create the variant line
-            variant_line = (
-                f"{variant['CHROM']}\t"
-                f"{variant['POS']}\t"
-                f"{variant['ID']}\t"
-                f"{variant['REF']}\t"
-                f"{variant['ALT']}\t"
-                f"{variant['QUAL']}\t"
-                f"{variant['FILTER']}\t"
-                f"{variant['INFO']}\t"
-                f"{variant['FORMAT']}\t"
-                f"{variant['SAMPLE']}"
-            )
-            
-            # Write the variant line
-            vcf_file.write(variant_line + '\n')
+        writer.write_record(record)
 
-#error handling
-def safe_get(dictionary, key, default=''):
-    """Return the value from dictionary safely or a default if the key is missing."""
-    return dictionary.get(key, default)
-   
-#validating variant data
-# if not all(key in variant for key in ['CHROM', 'POS', 'REF', 'ALT']):  # Add other necessary keys
- #               print(f"Skipping invalid variant data: {variant}")
- #               continue
+    
+    writer.close()
+
+'''
+def determine_variant_type(ref, alt):
+    if len(ref) == 1 and len(alt) == 1:
+        return "SNV"
+    elif len(ref) > len(alt):
+        return "DEL"
+    elif len(ref) < len(alt):
+        return "INS"
+    else:
+        return "MNV"  # Multinucleotide variant
+'''
+
+
+test_variants = [
+    {'CHROM': '1', 'POS': '123456', 'ID': '.', 'REF': 'G', 'ALT': 'A', 'QUAL': '60', 'FILTER': 'PASS', 'INFO': {}, 'FORMAT': 'GT', 'SAMPLE': '.'},
+    {'CHROM': '1', 'POS': '123459', 'ID': '.', 'REF': 'T', 'ALT': 'C', 'QUAL': '50', 'FILTER': 'PASS', 'INFO': {}, 'FORMAT': 'GT', 'SAMPLE': '.'}
+]
+
+output_vcf_path = 'test_output.vcf'
+build_vcf(test_variants, output_vcf_path)
+
+def print_vcf_contents(file_path):
+    with open(file_path, 'r') as file:
+        for line in file:
+            print(line.strip())
+
+print_vcf_contents(output_vcf_path)
