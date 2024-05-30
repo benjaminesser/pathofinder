@@ -15,6 +15,7 @@ def parse_mpileup_line(line):
         number of reads, read bases, and base qualities.
     """
 
+    # set each column of mpileup to corresponding variable
     fields = line.strip().split()
     chromosome = fields[0]
     position = fields[1]
@@ -26,7 +27,7 @@ def parse_mpileup_line(line):
     return chromosome, position, reference_base, num_reads, read_bases, base_qualities
 
 
-def call_variants(mpileup_file, min_var_freq):
+def call_variants(mpileup_file, min_var_freq, min_hom_freq):
 
     """
     Perform variant calling on an mpileup file.
@@ -53,21 +54,29 @@ def call_variants(mpileup_file, min_var_freq):
             base_counts = {'A': 0, 'T': 0, 'G': 0, 'C': 0}
             ref_reads = 0
             
-            # Set base counts based on read_bases
-            for read_base in read_bases:
-                normalized_base = read_base.upper()
-                if normalized_base in base_counts:
-                    base_counts[normalized_base] += 1
-                elif read_base == '.' or read_base == ',':
+            # set base counts based on read_bases
+            i = 0
+            while i < len(read_bases):
+                read_base = read_bases[i]
+                # if read base is A,T,G,C increment base_counts
+                if read_base.upper() in base_counts:
+                    base_counts[read_base.upper()] += 1
+                # if read base is . or , increment reference reads
+                elif read_base in '.,':
                     ref_reads += 1
+                # if read base is + or - skip the next few bases as they are part of the indel
+                elif read_base in "+-":
+                    indel_len = int(read_bases[i+1])
+                    i += indel_len
+                # if read base is $ or ^ or some other character, we simply skip it
+                i += 1
 
-            non_ref_reads = num_reads - ref_reads
-
-            # Determine alternate base with highest count
+            # determine alternate base with highest count
             alt_base = max(base_counts, key=base_counts.get)
             alt_base_count = base_counts[alt_base]
 
-            # If proportion of non-reference reads is greater than threshold, add position to variants
+            # if proportion of non-reference reads is greater than threshold, add position to variants
+            non_ref_reads = num_reads - ref_reads
             if (non_ref_reads / num_reads) >= min_var_freq:
                 variant = {
                     'CHROM': chromosome,
@@ -77,10 +86,17 @@ def call_variants(mpileup_file, min_var_freq):
                     'ALT': alt_base,
                     'QUAL': '.',
                     'FILTER': '.',
-                    'INFO': '.',
-                    'FORMAT': '.',
+                    'INFO': {'DP': num_reads},
+                    'FORMAT': 'GT',
                     'SAMPLE': '.' 
                 }
+
+                # if proportion of non-reference bases is greater than threshold to consider position homozygous, update genotype accordingly
+                if (alt_base_count / num_reads) >= min_hom_freq:
+                    variant['SAMPLE'] = '1/1'
+                # if proportion of alternate bases is less than threshold, call genotype heterozygous
+                else:
+                    variant['SAMPLE'] = '0/1'
 
                 variants.append(variant)
 

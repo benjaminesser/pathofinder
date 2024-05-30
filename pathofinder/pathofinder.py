@@ -25,15 +25,20 @@ def main():
 
     # Optional arguments
     parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant", type=float, required=False, default=0.2)
+
+    parser.add_argument("--min_hom_freq", help="minimum proportion of non-reference bases at a position required to call a variant homozygous", type=float, required=False, default=0.8)
     
     args = parser.parse_args()
 
-    variants = call_variants(args.mpileup, args.min_var_freq)
+    variants = call_variants(args.mpileup, args.min_var_freq, args.min_hom_freq)
     
     for variant in variants:
         print(variant)
 
-    build_vcf(variants, args.out)
+    # set default output file name if --out is not provided
+    output_file = args.out if args.out else "output.vcf"
+
+    build_vcf(variants, output_file)
 
 if __name__ == "__main__":
     main()

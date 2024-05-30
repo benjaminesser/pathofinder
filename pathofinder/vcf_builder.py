@@ -67,7 +67,7 @@ def determine_variant_type(ref, alt):
         return "INS"
     else:
         return "MNV"  # Multinucleotide variant
-'''
+
 
 
 test_variants = [
@@ -84,3 +84,4 @@ def print_vcf_contents(file_path):
             print(line.strip())
 
 print_vcf_contents(output_vcf_path)
+'''
