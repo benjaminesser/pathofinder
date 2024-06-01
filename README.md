@@ -16,25 +16,18 @@ To install PathoFinder, you will need Python 3.6 or higher. You can install it d
 ```bash
 git clone https://github.com/benjaminesser/PathoFinder.git
 cd PathoFinder
-pip install .
+python3 setup.py install
 ```
 # Usage
 
 To use PathoFinder, you need to prepare your genomic data in the mpileup format. Once you have your data ready, you can run PathoFinder as follows:
 ```
-pathofinder your_data.mpileup --out results.vcf
+pathofinder your_data.mpileup -o output.vcf
 ```
 ## Arguments
 ```
 mpileup path to input mpileup file
---output path where output VCF file will be saved
+-o, --out path where output VCF file will be saved
+--min_var_freq to specify minimum proportion of non-reference bases at a position required to call it a variant (default is 0.2)
+--min_hom_freq to specify minimum proportion of non-reference bases at a position required to call a variant homozygous (default is 0.8)
 ```
-## Contributing
-
-Contributions to PathoFinder are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.
-
-## License
-
-PathoFinder is open source and avaible under the MIT License.
-
-### Explanation
