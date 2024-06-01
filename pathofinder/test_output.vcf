@@ -1,6 +1,0 @@
-##fileformat=VCFv4.2
-##source=PathoFinder
-##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
-#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	Sample1
-1	123456	.	G	A	60	P;A;S;S	.	GT	.
-1	123459	.	T	C	50	P;A;S;S	.	GT	.

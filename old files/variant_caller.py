@@ -51,6 +51,11 @@ def call_variants(mpileup_file, min_var_freq, min_hom_freq):
     with open(mpileup_file, 'r') as f:
         for line in f:
             chromosome, position, reference_base, num_reads, read_bases, base_qualities = parse_mpileup_line(line)
+            
+            # if there are 0 reads for a given positon, move to the next position
+            if num_reads == 0:
+                continue
+
             base_counts = {'A': 0, 'T': 0, 'G': 0, 'C': 0}
             ref_reads = 0
             
@@ -66,8 +71,9 @@ def call_variants(mpileup_file, min_var_freq, min_hom_freq):
                     ref_reads += 1
                 # if read base is + or - skip the next few bases as they are part of the indel
                 elif read_base in "+-":
-                    indel_len = int(read_bases[i+1])
-                    i += indel_len
+                    if i + 1 < len(read_bases) and read_bases[i + 1].isdigit():
+                        indel_len = int(read_bases[i + 1])
+                        i += indel_len
                 # if read base is $ or ^ or some other character, we simply skip it
                 i += 1
 

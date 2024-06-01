@@ -7,6 +7,8 @@ Similar to VarScan pileup2snp
 """
 
 import argparse
+#from variant_caller import call_variants
+#from vcf_builder import build_vcf
 from . import myutils as myutils
 
 

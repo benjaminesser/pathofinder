@@ -58,18 +58,6 @@ def build_vcf(variants, output_path):
     writer.close()
 
 '''
-def determine_variant_type(ref, alt):
-    if len(ref) == 1 and len(alt) == 1:
-        return "SNV"
-    elif len(ref) > len(alt):
-        return "DEL"
-    elif len(ref) < len(alt):
-        return "INS"
-    else:
-        return "MNV"  # Multinucleotide variant
-
-
-
 test_variants = [
     {'CHROM': '1', 'POS': '123456', 'ID': '.', 'REF': 'G', 'ALT': 'A', 'QUAL': '60', 'FILTER': 'PASS', 'INFO': {}, 'FORMAT': 'GT', 'SAMPLE': '.'},
     {'CHROM': '1', 'POS': '123459', 'ID': '.', 'REF': 'T', 'ALT': 'C', 'QUAL': '50', 'FILTER': 'PASS', 'INFO': {}, 'FORMAT': 'GT', 'SAMPLE': '.'}
