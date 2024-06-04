@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 
 setup(
-    name='SNPFinder',
+    name='snpfinder',
     version='1.0',
     description='Command-line script to perform variant calling of mpileup files',
     author='Benjamin Esser and Ehsun Yazdani',
@@ -10,7 +10,7 @@ setup(
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            "pathofinder=pathofinder.pathofinder:main"
+            "snpfinder=snpfinder.snpfinder:main"
         ],
     },
 )

@@ -1,28 +1,27 @@
-# PathoFinder
+# snpfinder
 
-PathoFinder is a Python-based tool designed to identify and classify pathogenic variants from genomic data. By integrating variant calling algorithms with specialized filters for high pathogenic potential, PathoFinder helps researchers and clinicians quickly determine the likelihood of variants being disease-causing.
+snpfinder is a Python-based tool designed to identify single nucleotide polymorphisms from mpileup files. By integrating variant calling algorithms and specialized filters, snpfinder helps researchers quickly and efficiently pinpoint SNPs form genomic data.
 
 # Features
 
 - Variant calling from mpileup files.
-- Integration with known databases for variant annotation.
-- Scoring system to classify variants based on pathogenic potential.
+- Output into VCF file format.
 - Command-line interface for easy integration into bioinformatics workflows.
 
 # Installation
 
-To install PathoFinder, you will need Python 3.6 or higher. You can install it directly from GitHub using the following commands:
+To install snpfinder, you will need Python 3.6 or higher. You can install it directly from GitHub using the following commands:
 
 ```bash
-git clone https://github.com/benjaminesser/PathoFinder.git
-cd PathoFinder
+git clone https://github.com/benjaminesser/snpfinder.git
+cd snpfinder
 python3 setup.py install
 ```
 # Usage
 
-To use PathoFinder, you need to prepare your genomic data in the mpileup format. Once you have your data ready, you can run PathoFinder as follows:
+To use snpfinder, you need to prepare your genomic data in the mpileup format. Once you have your data ready, you can run snpfinder as follows:
 ```
-pathofinder your_data.mpileup -o output.vcf
+snpfinder your_data.mpileup -o output.vcf
 ```
 ## Arguments
 ```

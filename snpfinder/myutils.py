@@ -129,7 +129,7 @@ def build_vcf(variants, output_path):
 
     # Create and write VCF header
     header = """##fileformat=VCFv4.2
-##source=PathoFinderV1.0
+##source=snpfinderv1.0
 ##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 ##CHROM POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  SAMPLE""" 
