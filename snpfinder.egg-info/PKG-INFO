@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: snpfinder
+Version: 1.0
+Summary: Command-line script to perform variant calling of mpileup files
+Author: Benjamin Esser and Ehsun Yazdani
+Author-email: besser@ucsd.edu and eyazdani@ucsd.edu

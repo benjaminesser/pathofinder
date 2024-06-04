@@ -24,9 +24,9 @@ def main():
                         "Default: stdout", metavar="FILE", type=str, required=False)
 
     # Optional arguments
-    parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant", type=float, required=False, default=0.2)
+    parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant (default is 0.2)", type=float, required=False, default=0.2)
 
-    parser.add_argument("--min_hom_freq", help="minimum proportion of non-reference bases at a position required to call a variant homozygous", type=float, required=False, default=0.8)
+    parser.add_argument("--min_hom_freq", help="minimum proportion of non-reference bases at a position required to call a variant homozygous (default is 0.8)", type=float, required=False, default=0.8)
     
     args = parser.parse_args()
 

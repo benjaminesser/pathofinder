@@ -1,0 +1,10 @@
+README.md
+setup.py
+snpfinder/__init__.py
+snpfinder/myutils.py
+snpfinder/snpfinder.py
+snpfinder.egg-info/PKG-INFO
+snpfinder.egg-info/SOURCES.txt
+snpfinder.egg-info/dependency_links.txt
+snpfinder.egg-info/entry_points.txt
+snpfinder.egg-info/top_level.txt

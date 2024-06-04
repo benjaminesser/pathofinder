@@ -1,0 +1,2 @@
+[console_scripts]
+snpfinder = snpfinder.snpfinder:main

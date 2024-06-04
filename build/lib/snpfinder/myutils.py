@@ -1,3 +1,5 @@
+import os
+
 def parse_mpileup_line(line):
 
     """
@@ -25,7 +27,6 @@ def parse_mpileup_line(line):
     base_qualities = fields[5]
     
     return chromosome, position, reference_base, num_reads, read_bases, base_qualities
-
 
 def call_variants(mpileup_file, min_var_freq, min_hom_freq):
 
@@ -92,7 +93,7 @@ def call_variants(mpileup_file, min_var_freq, min_hom_freq):
                     'ALT': alt_base,
                     'QUAL': '.',
                     'FILTER': '.',
-                    'INFO': {'DP': num_reads},
+                    'INFO': f'DP={num_reads}',
                     'FORMAT': 'GT',
                     'SAMPLE': '.' 
                 }
@@ -107,3 +108,47 @@ def call_variants(mpileup_file, min_var_freq, min_hom_freq):
                 variants.append(variant)
 
     return variants
+
+def build_vcf(variants, output_path):
+
+    """
+    Create a VCF file from a list of variant dictionaries.
+    
+    Parameters:
+    - variants: List of dictionaries, each representing a variant with keys
+                'CHROM', 'POS', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO', and 'FORMAT'.
+    - output_path: Path to the output VCF file.
+    """
+
+    # Ensure the output directory exists
+    output_dir = os.path.dirname(output_path) if os.path.dirname(output_path) else '.'
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Open the output file
+    output_file =  open(output_path, "w")
+
+    # Create and write VCF header
+    header = """##fileformat=VCFv4.2
+##source=snpfinderv1.0
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##CHROM POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  SAMPLE""" 
+    output_file.write(header)
+
+    # Write rows
+    for variant in variants:
+        row = "\t".join([
+            variant['CHROM'],
+            variant['POS'],
+            variant['ID'],
+            variant['REF'],
+            variant['ALT'],
+            variant['QUAL'],
+            variant['FILTER'],
+            variant['INFO'],
+            variant['FORMAT'],
+            variant['SAMPLE']
+        ])
+        output_file.write(f"\n{row}")
+        
+    output_file.close()

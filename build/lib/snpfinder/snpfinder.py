@@ -3,18 +3,16 @@
 """
 Command-line script to perform variant calling of pileup files
 
-Similar to VarScan pileup2snp
+Similar to VarScan mpileup2snp
 """
 
 import argparse
-#from variant_caller import call_variants
-#from vcf_builder import build_vcf
 from . import myutils as myutils
 
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="pathofinder",
+        prog="snpfinder",
         description="Command-line script to perform variant calling of mpileup files"
     )
 
@@ -26,9 +24,9 @@ def main():
                         "Default: stdout", metavar="FILE", type=str, required=False)
 
     # Optional arguments
-    parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant", type=float, required=False, default=0.2)
+    parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant (default is 0.2)", type=float, required=False, default=0.2)
 
-    parser.add_argument("--min_hom_freq", help="minimum proportion of non-reference bases at a position required to call a variant homozygous", type=float, required=False, default=0.8)
+    parser.add_argument("--min_hom_freq", help="minimum proportion of non-reference bases at a position required to call a variant homozygous (default is 0.8)", type=float, required=False, default=0.8)
     
     args = parser.parse_args()
 
