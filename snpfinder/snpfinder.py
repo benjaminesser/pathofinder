@@ -32,12 +32,4 @@ def main():
     
     args = parser.parse_args()
 
-    variants = myutils.call_variants(args.mpileup, args.min_var_freq, args.min_hom_freq, args.min_coverage)
-
-    # set default output file name if --out is not provided
-    output_file = args.out if args.out else "output.vcf"
-
-    myutils.build_vcf(variants, output_file, args.min_coverage)
-
-if __name__ == "__main__":
-    main()
+    variants = myutils.call_variants(args.mpileup, args.min_var_freq, args.min_hom_
