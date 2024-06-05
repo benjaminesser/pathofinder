@@ -28,7 +28,7 @@ def parse_mpileup_line(line):
     
     return chromosome, position, reference_base, num_reads, read_bases, base_qualities
 
-def call_variants(mpileup_file, min_var_freq, min_hom_freq):
+def call_variants(mpileup_file, min_var_freq, min_hom_freq, min_coverage):
 
     """
     Perform variant calling on an mpileup file.
@@ -98,18 +98,25 @@ def call_variants(mpileup_file, min_var_freq, min_hom_freq):
                     'SAMPLE': '.' 
                 }
 
-                # if proportion of non-reference bases is greater than threshold to consider position homozygous, update genotype accordingly
+                # If proportion of non-reference bases is greater than threshold to consider position homozygous, update genotype accordingly
                 if (alt_base_count / num_reads) >= min_hom_freq:
                     variant['SAMPLE'] = '1/1'
-                # if proportion of alternate bases is less than threshold, call genotype heterozygous
+                # If proportion of alternate bases is less than threshold, call genotype heterozygous
                 else:
                     variant['SAMPLE'] = '0/1'
+
+                # If read depth is less than min coverage, caught by filter
+                if (num_reads < min_coverage):
+                    variant['FILTER'] = 'LowDepth'
+                # If read depth equal to or greater than min coverage, passes filter
+                else:
+                    variant['FILTER'] = 'PASS'
 
                 variants.append(variant)
 
     return variants
 
-def build_vcf(variants, output_path):
+def build_vcf(variants, output_path, min_coverage):
 
     """
     Create a VCF file from a list of variant dictionaries.
@@ -128,9 +135,10 @@ def build_vcf(variants, output_path):
     output_file =  open(output_path, "w")
 
     # Create and write VCF header
-    header = """##fileformat=VCFv4.2
+    header = f"""##fileformat=VCFv4.2
 ##source=snpfinderv1.0
 ##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##FILTER=<ID=LowDepth,Description="Depth of coverage below {min_coverage}">
 ##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
 ##CHROM POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  SAMPLE""" 
     output_file.write(header)

@@ -25,8 +25,12 @@ snpfinder your_data.mpileup -o output.vcf
 ```
 ## Arguments
 ```
+Required:
 mpileup path to input mpileup file
+
+Optional:
 -o, --out path where output VCF file will be saved
 --min_var_freq to specify minimum proportion of non-reference bases at a position required to call it a variant (default is 0.2)
 --min_hom_freq to specify minimum proportion of non-reference bases at a position required to call a variant homozygous (default is 0.8)
+--min_coverage to specify minimum number of bases at a given postion to pass the LowDepth filter (default is 10)
 ```

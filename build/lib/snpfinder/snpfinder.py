@@ -27,15 +27,17 @@ def main():
     parser.add_argument("--min_var_freq", help="minimum proportion of non-reference bases at a position required to call it a variant (default is 0.2)", type=float, required=False, default=0.2)
 
     parser.add_argument("--min_hom_freq", help="minimum proportion of non-reference bases at a position required to call a variant homozygous (default is 0.8)", type=float, required=False, default=0.8)
+
+    parser.add_argument("--min_coverage", help="minimum read depth at a given position to pass filter (default is 10)", type=int, required=False, default=10)
     
     args = parser.parse_args()
 
-    variants = myutils.call_variants(args.mpileup, args.min_var_freq, args.min_hom_freq)
+    variants = myutils.call_variants(args.mpileup, args.min_var_freq, args.min_hom_freq, args.min_coverage)
 
     # set default output file name if --out is not provided
     output_file = args.out if args.out else "output.vcf"
 
-    myutils.build_vcf(variants, output_file)
+    myutils.build_vcf(variants, output_file, args.min_coverage)
 
 if __name__ == "__main__":
     main()
