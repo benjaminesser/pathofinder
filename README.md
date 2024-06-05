@@ -21,7 +21,7 @@ python3 setup.py install
 
 To use snpfinder, you need to prepare your genomic data in the mpileup format. Once you have your data ready, you can run snpfinder as follows:
 ```
-snpfinder [your_data.mpileup] -o [output.vcf]
+snpfinder [your_data.mpileup] [optional arguments]
 ```
 
 Here is an example command that uses a test file from this repo:
