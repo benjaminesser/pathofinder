@@ -56,6 +56,9 @@ Optional:
 --min_coverage to specify minimum number of bases at a given postion to pass the LowDepth filter (default is 10)
 ```
 
+## Analysis of vcf comparison
+
+
 ## Contributors
 
 `snpfinder` was created by Benjamin Esser and Ehsun Yazdani. Special thanks to [mypileup repo](https://github.com/gymreklab/cse185-demo-project) for guidance.
