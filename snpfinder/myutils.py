@@ -143,20 +143,4 @@ def build_vcf(variants, output_path, min_coverage):
 ##CHROM POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  SAMPLE""" 
     output_file.write(header)
 
-    # Write rows
-    for variant in variants:
-        row = "\t".join([
-            variant['CHROM'],
-            variant['POS'],
-            variant['ID'],
-            variant['REF'],
-            variant['ALT'],
-            variant['QUAL'],
-            variant['FILTER'],
-            variant['INFO'],
-            variant['FORMAT'],
-            variant['SAMPLE']
-        ])
-        output_file.write(f"\n{row}")
-        
-    output_file.close()
+    # Writ
