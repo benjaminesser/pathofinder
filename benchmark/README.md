@@ -27,3 +27,15 @@ Adding up the user and system time to get the actual CPU time across all CPUs, t
 On this dataset, `snpfinder` takes only 1.27s, while `mpileup2snp` take 24.84s. That's almost 20x faster!
 
 Unfortunately this isn't due to our genius implementation. Rather, `mpileup2snp` is doing a lot more than `snpfinder`. There many `mpileup2snp` arguments that we left out of `snpfinder`. The VCF file created by `mpileup2snp` is a lot more sophisicated, with significantly more information in the INFO, FORMAT, and SAMPLE columns (including p-values). Instead, `snpfinder` is a light-weight variant caller, focusing mostly on just finding the positions of SNPs.
+
+## Scaling
+
+I took 100 lines of the `NA12878_child.mpileup` and duplicated them to create different sized mpileup files to run both variant callers on.
+
+[graph](scaling.png)
+
+I believe both run in linear time, just with different slopes.
+
+## Memory
+
+Reminder to look at memory usage.
