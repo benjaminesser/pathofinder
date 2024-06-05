@@ -34,4 +34,22 @@ This should create a file `test.vcf` with the following contents:
 ##fileformat=VCFv4.2
 ##source=snpfinderv1.0
 ##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
-##FILTER=<ID=LowDepth,Descri
+##FILTER=<ID=LowDepth,Description="Depth of coverage below 15">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##CHROM POS ID  REF ALT QUAL    FILTER  INFO    FORMAT  SAMPLE
+chr6	128405805	.	T	A	.	PASS	DP=15	GT	0/1
+chr6	128405806	.	G	C	.	PASS	DP=15	GT	1/1
+chr6	128405807	.	C	T	.	LowDepth	DP=10	GT	0/1
+```
+
+# Arguments
+```
+Required:
+mpileup path to input mpileup file
+
+Optional:
+-o, --out path where output VCF file will be saved
+--min_var_freq to specify minimum proportion of non-reference bases at a position required to call it a variant (default is 0.2)
+--min_hom_freq to specify minimum proportion of non-reference bases at a position required to call a variant homozygous (default is 0.8)
+--min_coverage to specify minimum number of bases at a given postion to pass the LowDepth filter (default is 10)
+```
