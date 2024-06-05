@@ -36,6 +36,18 @@ I took 100 lines of the `NA12878_child.mpileup` and duplicated them to create di
 
 I believe both run in linear time, just with different slopes.
 
+## Accuracy
+
+In `NA12878_child.mpileup`, `Varscan mpileup2snp` finds 40 variants, while `snpfinder` finds 47 (6 of which do not pass the filter). The one variant that `snpfinder` finds that `mpileup2snp` doesn't is at position 128583998. Looking through `NA12878_child.mpileup`, we see that the position has 6 alternate bases and a read depth of 28. 
+```
+chr6	128583998	T	28	,$,.,,,.,...a...aa.....a.a.a.	@C:FEF>D:4C55A393@FJJF3J7H8C
+```
+This is an alternate allele frequency of 0.21, so we would expect that both tools would call this position a variant. 
+
+One difference between the tools is that when specifying minimum coverage on `mpileup2snp`, the positions that do not pass this threshold do not appear at all on the resulting vcf. Using `snpfinder`, these positons show up on the vcf, but in the FILTER column, it is indicated that these variants have low read depth.
+
+If we forgive this difference between the tools and use `mpileup2snp` as the ground truth, this is an accuracy rate of ~98%. However, as shown above, I believe `snpfinder` found one variant that `mpileup2snp` should have found, so you could argue that it is more accurate for this specific application.
+
 ## Memory
 
 Reminder to look at memory usage.
