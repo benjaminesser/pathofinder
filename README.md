@@ -1,14 +1,14 @@
-## snpfinder
+# snpfinder
 
 `snpfinder` is a Python-based tool designed to identify single nucleotide polymorphisms (SNPs) from mpileup files. By integrating variant calling algorithms, `snpfinder` helps researchers quickly and efficiently pinpoint SNPs form genomic data.
 
-# Features
+## Features
 
 - Variant calling from mpileup files.
 - Output into VCF file format.
 - Command-line interface for easy integration into bioinformatics workflows.
 
-# Installation
+## Installation
 
 To install `snpfinder`, you will need Python 3.6 or higher. You can install it directly from GitHub using the following commands:
 
@@ -18,7 +18,7 @@ cd snpfinder
 python3 setup.py install
 ```
 
-# Usage
+## Usage
 
 To use `snpfinder`, you need to prepare your genomic data in the mpileup format. Once you have your data ready, you can run `snpfinder` as follows:
 ```
@@ -43,7 +43,7 @@ chr6	128405806	.	G	C	.	PASS	DP=15	GT	1/1
 chr6	128405807	.	C	T	.	LowDepth	DP=10	GT	0/1
 ```
 
-# Arguments
+## Arguments
 
 ```
 Required:
@@ -56,6 +56,6 @@ Optional:
 --min_coverage to specify minimum number of bases at a given postion to pass the LowDepth filter (default is 10)
 ```
 
-# Contributors
+## Contributors
 
 `snpfinder` was created by Benjamin Esser and Ehsun Yazdani. Special thanks to [mypileup repo](https://github.com/gymreklab/cse185-demo-project) for guidance.

@@ -1,8 +1,8 @@
-## Benchmark snpfinder vs VarScan mpileup2snp
+# Benchmark snpfinder vs VarScan mpileup2snp
 
 I used the `NA12878_child.mpileup` file from lab 1 to benchmark both variant callers. This file was derived from running `samtools mpileup` on `NA12878_child.sorted.bam` against `hg19.fa` on chromosome 6 from position 128405804-128605805.
 
-# VarScan mpileup2snp
+## VarScan mpileup2snp
 
 I used the command `java -jar VarScan.jar mpileup2snp ../example_files/NA12878_child.mpileup --min-var-frequency 0.2 --min-freq-for-hom 0.8 --min-coverage 10 --min-avg-qual 0 --strand-filter 0 --output-vcf 1 --variants 1 > varscan_child.vcf` to run VarScan mpileup2snp. I chose these arguments to mimic the default functionality of `snpfinder`. 
 
@@ -12,7 +12,7 @@ java -jar VarScan.jar mpileup2snp ../example_files/NA12878_child.mpileup  0.2  2
 ```
 Adding up the user and system time to get the actual CPU time across all CPUs, this command takes 24.84s.
 
-# snpfinder
+## snpfinder
 
 I used the command `snpfinder ../example_files/NA12878_child.mpileup -o snpfinder_child.vcf` to run snpfinder.
 
@@ -22,7 +22,7 @@ snpfinder ../example_files/NA12878_child.mpileup -o snpfinder_child.vcf  1.25s u
 ```
 Adding up the user and system time to get the actual CPU time across all CPUs, this command takes 1.27s.
 
-# Results
+## Results
 
 On this dataset, `snpfinder` takes only 1.27s, while `mpileup2snp` take 24.84s. That's almost 20x faster!
 
