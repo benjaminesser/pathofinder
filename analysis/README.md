@@ -8,6 +8,7 @@ Then I downloaded a portion containing chromosome 20 of the vcf file provided fo
 To download specific genomic region from chromosome 20 `.bam ` file:
 `samtools view -b "ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/data/HG00733/exome_alignment/HG00733.chrom20.ILLUMINA.bwa.PUR.exome.20130422.bam" 20:10000000-10090000 > output.bam `
 
+
 This provided me with filtered `output.bam` which I then used to convert to `output.mpileup`
 
 To generate `mpileup` from `output.bam`:
