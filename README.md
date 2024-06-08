@@ -1,6 +1,6 @@
 # snpfinder
 
-`snpfinder` is a Python-based tool designed to identify single nucleotide polymorphisms (SNPs) from mpileup files. By integrating variant calling algorithms, `snpfinder` helps researchers quickly and efficiently pinpoint SNPs form genomic data.
+`snpfinder` is a lightweight Python-based variant caller designed for identifying and classifying single nucleotide polymorphisms (SNPs) from mpileup files.
 
 ## Features
 
