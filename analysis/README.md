@@ -51,6 +51,6 @@ Both files show the same reference allele `C` however we have a discrepency when
 
 ## Conclusion
 
-The discrepnancy between the alleles likely indicates a difference in how variants are annotated or interperted between different analysis pipelines. 
+The discrepancy between the alleles likely indicates a difference in how variants are annotated or interpreted between different analysis pipelines. 
 
 It's important to note that we do not know the variant caller used to generate this VCF file on 1000 Genomes. It's quite likely that this file was generated using very different filtering mechanisms than `snpfinder`'s default parameters.
