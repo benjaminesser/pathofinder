@@ -20,7 +20,7 @@ This provides me with the public dataset `.vcf ` file I want to use to compare m
 
 ## Comparing Chr20 on position 10018848 - Allele Matching:
 
-`snpfinder` VCF output file provides reference allele is `T` and alternate allele is `A` where in the 1000Genomes provided VCF file, it shows that the reference allele is `TC` and atlernate allele is `T`
+`snpfinder` VCF output file provides reference allele is `T` and alternate allele is `A` where in the 1000Genomes provided VCF file, it shows that the reference allele is `TC` and alternate allele is `T`
 
 This indicates a mismatch in the reference and alternate alleles between the two files which may be caused by different representations of the same genomic variation.
 
