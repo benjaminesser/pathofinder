@@ -50,4 +50,4 @@ If we forgive this difference between the tools and use `mpileup2snp` as the gro
 
 ## Memory
 
-Reminder to look at memory usage.
+To benchmark memory usage, I looked at the “Maximum resident set size” from the GNU Time package (v1.9). I simply ran `gtime -v` before both commands on `NA12878_child.mpileup`. `snpfinder` used a maximum of 17536 kB while `mpileup2snp` only used 3376 kB.
